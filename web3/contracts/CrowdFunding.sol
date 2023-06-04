@@ -18,6 +18,16 @@ contract CrowdFunding {
 
     uint256 public numberOfCampaigns = 0;
 
+    /**
+    * @dev Create a new campaign.
+    * @param _owner The address of the campaign owner.
+    * @param _title The title of the campaign.
+    * @param _description The description of the campaign.
+    * @param _target The target amount to be raised.
+    * @param _deadline The deadline timestamp for the campaign.
+    * @param _image The image associated with the campaign.
+    * @return uint256 The ID of the created campaign.
+    */
     function createCampaign(address _owner, string memory _title, string memory _description, uint256 _target, uint256 _deadline, string memory _image) public returns (uint256) {
         Campaign storage campaign = campaigns[numberOfCampaigns];
 
@@ -36,6 +46,10 @@ contract CrowdFunding {
         return numberOfCampaigns-1;
     }
 
+    /**
+     * @dev Donate to a campaign.
+     * @param _id The ID of the campaign to donate to.
+     */
     function donateToCampaign(uint256 _id) public payable {
         uint256 amount = msg.value;
 
@@ -51,10 +65,19 @@ contract CrowdFunding {
         }
     }
 
+    /**
+     * @dev Get the list of donators and their corresponding donations for a campaign.
+     * @param _id The ID of the campaign.
+     * @return :The addresses of donators and their donation amounts.
+     */
     function getDonators(uint256 _id) view public returns (address[] memory, uint256[] memory) {
         return (campaigns[_id].donators, campaigns[_id].donations);
     }
 
+    /**
+     * @dev Get all campaigns.
+     * @return :All the campaigns.
+     */
     function getCampaigns() public view returns (Campaign[] memory) {
         Campaign[] memory allCampaigns = new Campaign[](numberOfCampaigns);
 
