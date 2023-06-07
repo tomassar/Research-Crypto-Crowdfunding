@@ -14,7 +14,7 @@ const Leftbar = () => {
       <Link to="/">
         <Icon styles="w-[70px] h-[70px] bg-[#FFFFFF00]" imgUrl={logo}/>
       </Link>
-      <div className="flex-1 flex flex-col justify-between items-center bg-[#1a1c1b20] rounded-[20px] w-[65px] py-4 mt-12">
+      <div className="flex-1 flex flex-col justify-between items-center bg-[#1a1c1b20] rounded-[5px] w-[65px] py-4 mt-12">
         <div className="flex flex-col justify-center items-center gap-3"> 
           {navlinks.map((link) => (
             <Icon

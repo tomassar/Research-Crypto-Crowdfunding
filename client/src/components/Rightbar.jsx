@@ -13,8 +13,9 @@ const Rightbar = () => {
       <div className="sm:flex hidden flex-row justify-end gap-4">
         <CustomButton
           btnType="button"
-          title={address ? "Create a campaign" : "Connect"}
-          styles={address ? 'bg-[#8fccae90]' : 'bg-[#8c6dfd]'}
+          title={address ? "Publish a campaign" : "Connect"}
+          //bg-[#96b6d78f]
+          styles={address ? '' : 'bg-[#8c6dfd]'}
           handleClick={() => {
             if(address) navigate('create-campaign')
             else 'connect()'
@@ -26,6 +27,7 @@ const Rightbar = () => {
           </div>
         </Link>
       </div>
+      
       <div className="flex-1 flex flex-col justify-between items-center bg-[#1a1c1b20] w-[200px] py-4 mt-12">
         <div className="flex flex-col justify-center items-center gap-3"> 
           Topic list

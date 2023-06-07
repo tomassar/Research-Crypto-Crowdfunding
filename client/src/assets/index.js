@@ -3,11 +3,13 @@ import dashboard from './dashboard.png';
 import campaign from './campaign.png';
 import profile from './profile.png';
 import search from './search.png';
+import menu from './menu.png';
 
 export {
     logo,
     dashboard,
     campaign,
     profile,
-    search
+    search,
+    menu
   };
