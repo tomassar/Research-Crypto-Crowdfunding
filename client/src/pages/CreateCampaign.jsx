@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { CustomButton, FormElement } from '../components';
+import {checkImageValidity} from '../utils/index.js'
+import { useStateContext } from '../context';
+import { ethers } from 'ethers';
+import { useNavigate } from 'react-router-dom'
 
 /**
  * Component for creating a new campaign.
@@ -9,6 +13,8 @@ import { CustomButton, FormElement } from '../components';
 const CreateCampaign = () => {
   // State variables
   const [isLoading, setIsLoading] = useState(false);
+  const { navigate } = useNavigate()
+  const {createCampaign} = useStateContext()
   const [form, setForm] = useState({
     name: '',
     title: '',
@@ -24,9 +30,19 @@ const CreateCampaign = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    checkImageValidity(form.image, async (exists) => {
+      if(exists){
+        setIsLoading(true)
+        await createCampaign({...form, target: ethers.utils.parseUnits(form.target, 18)})
+        setIsLoading(false)
+        navigate("/")
+      }else{
+        alert('Provide valid image URL')
+        setForm({...form, image: ''})
+      }
+    })
   };
 
   return (
