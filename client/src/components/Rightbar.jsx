@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Icon from './Icon';
 import { Link, useNavigate } from 'react-router-dom';
 
+import {useStateContext} from '../context'
 import CustomButton from './CustomButton';
 import { profile } from '../assets';
 
@@ -12,7 +13,8 @@ import { profile } from '../assets';
  */
 const Rightbar = () => {
   const navigate = useNavigate();
-  const address = '0xdsadsa';
+  const {connect, address} = useStateContext()
+
 
   return (
     <div className="flex justify-between items-center flex-col sticky top-5 h-[90vh]">
@@ -25,7 +27,7 @@ const Rightbar = () => {
           styles={address ? '' : 'bg-[#8c6dfd]'}
           handleClick={() => {
             if (address) navigate('create-campaign');
-            else 'connect()';
+            else connect()
           }}
         />
         {/* User Profile Link */}

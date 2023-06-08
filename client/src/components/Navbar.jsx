@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import {useStateContext} from '../context'
 import CustomButton from './CustomButton';
 import Icon from './Icon';
 import { navlinks } from '../constants/index';
@@ -14,7 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('dashboard');
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const address = '0xdsadsa';
+  const {connect, address} = useStateContext()
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-center lg:items-center md:items-center mb-[35px] gap-6">
@@ -69,7 +71,7 @@ const Navbar = () => {
               styles={address ? 'bg-[#96b6d78f]' : 'bg-[#8c6dfd]'}
               handleClick={() => {
                 if(address) navigate('create-campaign')
-                else 'connect()'
+                else connect()
               }}
             />
           </div>

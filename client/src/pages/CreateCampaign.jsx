@@ -14,7 +14,7 @@ const CreateCampaign = () => {
   // State variables
   const [isLoading, setIsLoading] = useState(false);
   const { navigate } = useNavigate()
-  const {createCampaign} = useStateContext()
+  const {publishCampaign} = useStateContext()
   const [form, setForm] = useState({
     name: '',
     title: '',
@@ -35,7 +35,7 @@ const CreateCampaign = () => {
     checkImageValidity(form.image, async (exists) => {
       if(exists){
         setIsLoading(true)
-        await createCampaign({...form, target: ethers.utils.parseUnits(form.target, 18)})
+        await publishCampaign({...form, target: ethers.utils.parseUnits(form.target, 18)})
         setIsLoading(false)
         navigate("/")
       }else{
