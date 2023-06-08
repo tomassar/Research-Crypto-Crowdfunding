@@ -51,6 +51,14 @@ export const StateContextProvider = ({children}) => {
         return parsedCampaigns
     }
 
+    // Define logic necessary to get only one user's campaigns
+    const getUserCampaigns = async () => {
+        const allCampaigns = await getCampaigns();
+
+        const filteredCampaigns = allCampaigns.filter((campaign) => campaign.owner === address)
+        return filteredCampaigns;
+    }
+
     // Provide the context values to the components
     return(
         <StateContext.Provider
@@ -59,7 +67,8 @@ export const StateContextProvider = ({children}) => {
                 contract,
                 connect,
                 publishCampaign,
-                getCampaigns
+                getCampaigns,
+                getUserCampaigns
             }}
         >
             {children}
