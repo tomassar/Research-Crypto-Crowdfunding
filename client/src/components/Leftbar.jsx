@@ -29,7 +29,7 @@ const Leftbar = () => {
           {/* Map through navlinks to render icons */}
           {navlinks.map((link) => (
             <Icon
-              styles="w-[42px] h-[42px]"
+              styles="transition duration-300 ease-in-out hover:opacity-70 w-[42px] h-[42px]"
               key={link.name}
               {...link}
               isActive={isActive}

@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className="flex md:flex-row flex-col-reverse justify-center lg:items-center md:items-center mb-[35px] gap-6">
       {/* Search Bar */}
       <div className="lg:flex-1 flex flex-row lg:max-w-[400px] max-w-[600px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c2410] rounded-[5px]">
-        <div className="w-[72px] h-full rounded-[5px] bg-[#96b6d78f] flex justify-center items-center cursor-pointer">
+        <div className="transition duration-300 ease-in-out hover:opacity-70 w-[72px] h-full rounded-[5px] bg-[#96b6d78f] flex justify-center items-center cursor-pointer">
           <img src={search} alt="search" className="w-[15px] h-[15px] object-contain" />
         </div>
         <input

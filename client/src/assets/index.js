@@ -5,6 +5,7 @@ import profile from './profile.png';
 import search from './search.png';
 import menu from './menu.png';
 import loader from './loader.svg';
+import category from './category.png';
 
 export {
     logo,
@@ -13,5 +14,6 @@ export {
     profile,
     search,
     menu,
-    loader
+    loader,
+    category
   };

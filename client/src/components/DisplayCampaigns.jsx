@@ -21,17 +21,17 @@ const DisplayCampaigns = ({title, isLoading, campaigns}) => {
             {isLoading && (
                 <img src={loader} alt="loader" className="w-[100px] h-[100px] object-contain"/>
             )}
+
+            {!isLoading && campaigns.length === 0 && (
+                <p className="font-epilogue font-semibold text-[13px] leading-[30px]">You have not created any campaigns yet</p>
+                )}
+
+            {!isLoading && campaigns.length > 0 && campaigns.map( (campaign) => <CampaignCard
+                key={campaign.id}
+                {...campaign}
+                handleClick={() => handleNavigate(campaign)}
+                />)}
         </div>
-
-        {!isLoading && campaigns.length === 0 && (
-            <p className="font-epilogue font-semibold text-[13px] leading-[30px]">You have not created any campaigns yet</p>
-        )}
-
-        {!isLoading && campaigns.length > 0 && campaigns.map( (campaign) => <CampaignCard
-            key={campaign.id}
-            {...campaign}
-            handleClick={() => handleNavigate(campaign)}
-        />)}
     </div>
   )
 }
