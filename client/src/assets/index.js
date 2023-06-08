@@ -4,6 +4,7 @@ import campaign from './campaign.png';
 import profile from './profile.png';
 import search from './search.png';
 import menu from './menu.png';
+import loader from './loader.svg';
 
 export {
     logo,
@@ -11,5 +12,6 @@ export {
     campaign,
     profile,
     search,
-    menu
+    menu,
+    loader
   };
