@@ -14,7 +14,7 @@ export const StateContextProvider = ({children}) => {
     const address = useAddress();
     const connect = useMetamask();
 
-    // Define functions and logic neccesary to publish campaign
+    // Define logic neccesary to publish campaign
     const publishCampaign = async (form) => {
         try{
             const data = await createCampaign({ args: [
@@ -32,6 +32,25 @@ export const StateContextProvider = ({children}) => {
         }
     }
 
+    // Define logic necessary to get campaigns
+    const getCampaigns = async () => {
+        const campaigns = await contract.call('getCampaigns')
+        
+        //Parse campaigns to make it human readable
+        const parsedCampaigns = campaigns.map((campaign, i) => ({
+            owner: campaign.owner,
+            title: campaign.title,
+            description: campaign.description,
+            target: ethers.utils.formatEther(campaign.target.toString()),
+            deadline: campaign.deadline.toNumber(),
+            amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+            image: campaign.image,
+            pId: i
+        }))
+
+        return parsedCampaigns
+    }
+
     // Provide the context values to the components
     return(
         <StateContext.Provider
@@ -40,6 +59,7 @@ export const StateContextProvider = ({children}) => {
                 contract,
                 connect,
                 publishCampaign,
+                getCampaigns
             }}
         >
             {children}

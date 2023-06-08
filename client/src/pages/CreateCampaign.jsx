@@ -35,6 +35,7 @@ const CreateCampaign = () => {
     checkImageValidity(form.image, async (exists) => {
       if(exists){
         setIsLoading(true)
+        console.log(form)
         await publishCampaign({...form, target: ethers.utils.parseUnits(form.target, 18)})
         setIsLoading(false)
         navigate("/")
