@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import {ethers} from 'ethers'
 
 import {useStateContext} from '../context'
-import {CustomButton, InfoBox} from '../components'
+import {CustomButton, InfoBox, Loader} from '../components'
 import {calculateProgressPercentage, calculateDaysLeft} from '../utils'
 import {profile} from '../assets'
 
+// Component that shows every detail of each component
 const CampaignDetails = () => {
   const {state} = useLocation();
+  const navigate = useNavigate()
   const {donate, getDonations, contract, address} = useStateContext()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -32,14 +34,17 @@ const CampaignDetails = () => {
     setIsLoading(true)
 
     await donate(state.pId, amount)
+    navigate('/')
     setIsLoading(false)
   }
 
   console.log(state);
   return (
     <div>
-      {isLoading && 'Loading...'}
+      {/*Loader when donating*/}
+      {isLoading && <Loader/>}
         <h1 className="font-epilogue font-bold text-[30px]">{state.title}</h1>
+        {/*Bar that shows progress*/}
         <div className="relative w-full h-[10px] rounded-[10px] bg-[#f2f3f4] mt-2">
           <div className='absolute h-full bg-[#b7ccdb] rounded-[10px]' style={{width: `${calculateProgressPercentage(state.target, state.amountCollected)}%`, maxWidth:'100%'}}></div>
         </div>
@@ -47,11 +52,13 @@ const CampaignDetails = () => {
           <p className="font-epilogue font-[15px] font-semibold ">{state.amountCollected} ETH</p>
           <p className="font-epilogue font-[15px] font-semibold ">{state.target} ETH</p>
         </div>
+        {/*Campaign image*/}
       <div className="w-full flex md:flex-row flex-col my-4 gap-[30px]">
         <div className="flex-1 flex-col">
           <img src={state.image} alt="Campaign image" className="w-full h-[410px] object-cover rounded-[2px]"/>
         </div>
       </div>
+      {/*Little boxes of information*/}
       <div className="flex flex-wrap gap-7 justify-evenly">
         <div className="flex flex-wrap gap-7 justify-between">
           <InfoBox title="Days left" value={daysLeft}/>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CustomButton, FormElement } from '../components';
+import { CustomButton, FormElement, Loader } from '../components';
 import {checkImageValidity} from '../utils/index.js'
 import { useStateContext } from '../context';
 import { ethers } from 'ethers';
@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 const CreateCampaign = () => {
   // State variables
   const [isLoading, setIsLoading] = useState(false);
-  const { navigate } = useNavigate()
+  const navigate = useNavigate()
   const {publishCampaign} = useStateContext()
   const [form, setForm] = useState({
     name: '',
@@ -48,7 +48,7 @@ const CreateCampaign = () => {
 
   return (
     <div className="bg-[#1c1c2420] flex justify-center items-center flex-col sm:p-10 p-4">
-      {isLoading && 'Loader...'}
+      {isLoading && <Loader/>}
       <div className="flex justify-center items-center p-[16px] sm:min-w-[380px]">
         <h1 className="font-epilogue sm:text-[25px] text-[14px] leading-[38px]">
           Start a campaign!

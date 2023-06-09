@@ -1,4 +1,4 @@
-import { campaign, dashboard, profile } from '../assets';
+import { campaign, dashboard, profile} from '../assets';
 
 export const navlinks = [
     {

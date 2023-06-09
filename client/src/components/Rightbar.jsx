@@ -24,7 +24,7 @@ const Rightbar = () => {
         <CustomButton
           btnType="button"
           title={address ? "Publish a campaign" : "Connect"}
-          styles={address ? '' : 'bg-[#8c6dfd]'}
+          styles={address ? '' : 'bg-[#000000cf] text-white'}
           handleClick={() => {
             if (address) navigate('create-campaign');
             else connect()

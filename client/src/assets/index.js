@@ -15,5 +15,5 @@ export {
     search,
     menu,
     loader,
-    category
+    category,
   };
