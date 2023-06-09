@@ -11,7 +11,6 @@ export const StateContextProvider = ({children}) => {
     // Use hooks to access necessary data and functions
     const {contract} = useContract("0xAE78954Ba5a25EC9003F5b98EEF0c3195ed39fBc");
     const {mutateAsync: createCampaign} = useContractWrite(contract, 'createCampaign')
-    const {mutateAsync: donateToCampaign} = useContractWrite(contract, 'donateToCampaign')
     const address = useAddress();
     const connect = useMetamask();
 
@@ -60,6 +59,14 @@ export const StateContextProvider = ({children}) => {
         return filteredCampaigns;
     }
 
+    // Define logic necessary to search campaigns
+    const searchCampaigns = async (search) => {
+        const allCampaigns = await getCampaigns();
+
+        const filteredCampaigns = allCampaigns.filter((campaign) => campaign.title.toLowerCase().includes(search.toLowerCase()))
+        return filteredCampaigns;
+    }
+
     const donate = async (pId, amount) => {
         const data = await contract.call('donateToCampaign', [pId], { value: ethers.utils.parseEther(amount)});
         //const data = await donateToCampaign({ args: [pId]}, {value: ethers.utils.parseEther(amount)});
@@ -93,7 +100,8 @@ export const StateContextProvider = ({children}) => {
                 getCampaigns,
                 getUserCampaigns,
                 donate,
-                getDonations
+                getDonations,
+                searchCampaigns
             }}
         >
             {children}

@@ -18,6 +18,15 @@ const Navbar = () => {
   const [toggleDrawer, setToggleDrawer] = useState(false);
   const {connect, address} = useStateContext()
 
+  const handleSearch = (e) => {
+    if(e.target.value.length>0){
+      e.preventDefault()
+      navigate(`/search/${e.target.value}`, {state: e.target.value})
+    }else{
+      navigate('/')
+    }
+  }
+
   return (
     <div className="flex md:flex-row flex-col-reverse justify-center lg:items-center md:items-center mb-[35px] gap-6">
       {/* Search Bar */}
@@ -29,6 +38,7 @@ const Navbar = () => {
           type="text"
           placeholder="Search for Campaigns"
           className="pl-2 flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] bg-transparent outline-none"
+          onChange={handleSearch}
         />
       </div>
 

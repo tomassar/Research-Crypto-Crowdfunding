@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {CampaignCard} from '../components'
 import {loader} from '../assets'
 
-const DisplayCampaigns = ({title, isLoading, campaigns}) => {
+const DisplayCampaigns = ({title, isLoading, campaigns, search}) => {
     const navigate = useNavigate()
 
     //To improve code readability
