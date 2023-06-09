@@ -9,28 +9,47 @@ import {profile} from '../assets'
 
 const CampaignDetails = () => {
   const {state} = useLocation();
-  const {getDonations, contract, address} = useStateContext()
+  const {donate, getDonations, contract, address} = useStateContext()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [amount, setAmount] = useState('')
+  const [amount, setAmount] = useState(0)
   const [donators, setDonators] = useState([])
 
   const daysLeft = calculateDaysLeft(state.deadline)
 
-  const handleDonate = async () => {
+  const fetchDonators = async () => {
+    const data = await getDonations(state.pId)
+    setDonators(data)
+  }
 
+  //Call fetchDonators as soon as page loads
+  useEffect(() => {
+    if(contract) fetchDonators()
+  }, [contract, address, amount])
+  
+
+  const handleDonate = async () => {
+    setIsLoading(true)
+
+    await donate(state.pId, amount)
+    setIsLoading(false)
   }
 
   console.log(state);
   return (
     <div>
       {isLoading && 'Loading...'}
-      <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
+        <h1 className="font-epilogue font-bold text-[30px]">{state.title}</h1>
+        <div className="relative w-full h-[10px] rounded-[10px] bg-[#f2f3f4] mt-2">
+          <div className='absolute h-full bg-[#b7ccdb] rounded-[10px]' style={{width: `${calculateProgressPercentage(state.target, state.amountCollected)}%`, maxWidth:'100%'}}></div>
+        </div>
+        <div className="flex flex-row justify-between">
+          <p className="font-epilogue font-[15px] font-semibold ">{state.amountCollected} ETH</p>
+          <p className="font-epilogue font-[15px] font-semibold ">{state.target} ETH</p>
+        </div>
+      <div className="w-full flex md:flex-row flex-col my-4 gap-[30px]">
         <div className="flex-1 flex-col">
           <img src={state.image} alt="Campaign image" className="w-full h-[410px] object-cover rounded-[2px]"/>
-          <div className="relative w-full h-[5px] bg-[#3a3a43] mt-3 mb-6">
-            <div className='absolute h-full bg-[#4acd8d]' style={{width: `${calculateProgressPercentage(state.target,state.amount)}%`, maxWidth:'100%'}}></div>
-          </div>
         </div>
       </div>
       <div className="flex flex-wrap gap-7 justify-evenly">
@@ -38,9 +57,6 @@ const CampaignDetails = () => {
           <InfoBox title="Days left" value={daysLeft}/>
           <InfoBox title="Total donators" value={donators.length}/>
         </div>
-          {/* <h4 className="font-epilogue font-semibold text-[20px]">
-              Creator
-          </h4> */}
           <div className="flex flex-row items-center justify-center flex-wrap gap-[14px]">
             <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#b7ccdb] cursor-pointer">
               <img src={profile} alt="user" className="w-1/2 h-1/2 object-contain" />
@@ -69,9 +85,10 @@ const CampaignDetails = () => {
                 Backers
             </h4>
             <div className="mt-[20px] flex flex-col gap-4">
-              {donators.length > 0 ? donators.map( (donator, index) => (
-                <div>
-                  Donator
+              {donators.length > 0 ? donators.map( (item, index) => (
+                <div key={`${item.donator}-${index}`} className="flex justify-beween items-center gap-4">
+                  <p className="font-epilogue font-normal text-[16px] leading-[26px] break-all">{index+1}. {item.donator}</p>
+                  <p className="font-epilogue font-normal text-[16px] leading-[26px] break-all">{item.donation} ETH</p>
                 </div>
               )) : (
                 <p className="font-epilogue font-normal text-[16px] leading-[26px] text-justify">No backers yet. Be the first one!</p> 

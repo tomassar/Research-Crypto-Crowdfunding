@@ -1,6 +1,6 @@
 //Wrap the app with this context so that every page and component can use it
 import React, {useContext, createContext} from 'react'
-import {useAddress, useContract, useMetamask, useContractWrite} from '@thirdweb-dev/react'
+import {useAddress, useContract, useMetamask, useContractWrite, useContractRead} from '@thirdweb-dev/react'
 import {ethers} from 'ethers'
 
 // Create a new context 
@@ -11,6 +11,7 @@ export const StateContextProvider = ({children}) => {
     // Use hooks to access necessary data and functions
     const {contract} = useContract("0xAE78954Ba5a25EC9003F5b98EEF0c3195ed39fBc");
     const {mutateAsync: createCampaign} = useContractWrite(contract, 'createCampaign')
+    const {mutateAsync: donateToCampaign} = useContractWrite(contract, 'donateToCampaign')
     const address = useAddress();
     const connect = useMetamask();
 
@@ -59,6 +60,28 @@ export const StateContextProvider = ({children}) => {
         return filteredCampaigns;
     }
 
+    const donate = async (pId, amount) => {
+        const data = await contract.call('donateToCampaign', [pId], { value: ethers.utils.parseEther(amount)});
+        //const data = await donateToCampaign({ args: [pId]}, {value: ethers.utils.parseEther(amount)});
+
+        return data
+    }
+
+    const getDonations = async (pId) => {
+        const donations = await contract.call('getDonators', [pId])
+        const numberOfdonations = donations[0].length
+        const parsedDonations = []
+
+        for(let i=0; i<numberOfdonations; i++){
+            parsedDonations.push({
+                donator: donations[0][i],
+                donation: ethers.utils.formatEther(donations[1][i].toString())
+            })
+        }
+
+        return parsedDonations;
+    }
+
     // Provide the context values to the components
     return(
         <StateContext.Provider
@@ -68,7 +91,9 @@ export const StateContextProvider = ({children}) => {
                 connect,
                 publishCampaign,
                 getCampaigns,
-                getUserCampaigns
+                getUserCampaigns,
+                donate,
+                getDonations
             }}
         >
             {children}

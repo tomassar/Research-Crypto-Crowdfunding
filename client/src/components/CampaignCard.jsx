@@ -14,7 +14,7 @@ const CampaignCard = ({owner, title, description, target, deadline, amountCollec
             </div>
             <p className="flex-1 font-epilogue font-normal text-[13px] truncate">by <span className="text-[#fff]">{owner}</span></p>
         </div>
-        <img src={image} alt="campaign" className="transition duration-300 ease-in-out hover:opacity-70 cursor-pointer w-full h-[158px] object-cover rounded-[2px] "/>
+        <img src={image} onClick={handleClick} alt="campaign" className="transition duration-300 ease-in-out hover:opacity-70 cursor-pointer w-full h-[158px] object-cover rounded-[2px] "/>
         <div className="flex flex-col p-4">
             <div className="flex flex-row items-center mb-[18px]">
                 <img src={category} alt="tag" className="w-[17px] h-[17px] object-contain" />

@@ -2,17 +2,17 @@ import { campaign, dashboard, profile } from '../assets';
 
 export const navlinks = [
     {
-      name: 'dashboard',
+      name: 'Dashboard',
       imgUrl: dashboard,
       link: '/',
     },
     {
-      name: 'campaign',
+      name: 'Campaign',
       imgUrl: campaign,
       link: '/create-campaign',
     },
     {
-      name: 'profile',
+      name: 'Profile',
       imgUrl: profile,
       link: '/profile',
     }

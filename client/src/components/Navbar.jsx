@@ -27,7 +27,7 @@ const Navbar = () => {
         </div>
         <input
           type="text"
-          placeholder="Search for campaigns"
+          placeholder="Search for Campaigns"
           className="pl-2 flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] bg-transparent outline-none"
         />
       </div>
@@ -67,7 +67,7 @@ const Navbar = () => {
             {/* Button for publishing a campaign or connecting */}
             <CustomButton
               btnType="button"
-              title={address ? "Publish a campaign" : "Connect"}
+              title={address ? "Publish a Campaign" : "Connect"}
               styles={address ? 'bg-[#96b6d78f]' : 'bg-[#8c6dfd]'}
               handleClick={() => {
                 if(address) navigate('create-campaign')
